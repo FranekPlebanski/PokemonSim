@@ -3,7 +3,7 @@ package com.pokesim.model.entities;
 import java.util.List;
 
 public class AllPokemons {
-    private final List<Pokemon> starters = List.of(
+    public static final List<Pokemon> starters = List.of(
             new Pokemon("Bulbasaur", "Earth", 100, 5),
             new Pokemon("Charmander", "Fire", 90, 10),
             new Pokemon("Squirtle", "Water", 95, 6)
@@ -16,8 +16,9 @@ public class AllPokemons {
             new WildPokemons("Charmander", "Fire", 70, 12)
     );
 
-    private final List<StorePokemons> storePokemons = List.of(
-
+    private final List<StorePokemon> storePokemons = List.of(
+            new StorePokemon("Snorlax", "normal", 460, 100, 20),
+            new StorePokemon("Diglet", "Earth", 20, 10, 5)
     );
 
     public List<Pokemon> getStarters() {
@@ -26,6 +27,10 @@ public class AllPokemons {
 
     public List<WildPokemons> getWildPokemons() {
         return wildPokemons;
+    }
+
+    public List<StorePokemon> getStorePokemons() {
+        return storePokemons;
     }
 
     public Pokemon getStarter(int index) {

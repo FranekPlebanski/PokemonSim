@@ -1,6 +1,6 @@
 package com.pokesim.model.entities;
 
-public class Pokemon {
+public class Pokemon implements Cloneable {
     private String name;
     private String element;
     private int hp;
@@ -11,7 +11,15 @@ public class Pokemon {
         this.element = element;
         this.hp = hp;
         this.attack = attack;
+    }
 
+    public Pokemon clone() {
+        try {
+            return (Pokemon) super.clone();
+
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError(e);
+        }
     }
 
     public String getName() {
@@ -26,7 +34,33 @@ public class Pokemon {
         return hp;
     }
 
+    public void attack(int i){
+        this.hp -= i;
+    }
+
+    public void rest(){
+        this.hp += 10;
+    }
+
     public int getAttack() {
         return attack;
+    }
+
+    public void setDefaultHp(){
+        this.hp += 50;
+    }
+
+    public void cityPokemonHeal(){
+        this.hp += 30;
+    }
+
+    @Override
+    public String toString() {
+        return "Pokemon{" +
+                "name='" + name + '\'' +
+                ", element='" + element + '\'' +
+                ", hp=" + hp +
+                ", attack=" + attack +
+                '}';
     }
 }
