@@ -22,7 +22,7 @@ public class GameController {
 
     public void run() {
         this.currentPlayer = consoleUI.startGame();
-        while(currentPlayer.getPokemons().size() < 10 || !currentPlayer.getPokemons().isEmpty()) {
+        while(currentPlayer.getPokemons().size() <= 3 && !currentPlayer.getPokemons().isEmpty()) {
             CityAction action = consoleUI.cityMenu(currentPlayer.getCurrentCity());
             if (action == CityAction.BUY_POKEMON) {
 
@@ -100,6 +100,12 @@ public class GameController {
 
 
 
+        }
+        if (currentPlayer.getPokemons().size() == 4) {
+            consoleUI.notifyWin();
+        }
+        else{
+            consoleUI.notifyLose();
         }
     }
 }

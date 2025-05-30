@@ -168,4 +168,14 @@ public class ConsoleUI implements UI {
     public void displayMoneyAmount(Player currentPlayer){
         System.out.println("Your balance: " + currentPlayer.getMoneyAmount());
     }
+
+    @Override
+    public void notifyWin(){
+        System.out.println("You win!");
+    }
+
+    @Override
+    public void notifyLose(){
+        System.out.println("You lose!");
+    }
 }
