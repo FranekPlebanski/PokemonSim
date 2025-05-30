@@ -88,14 +88,23 @@ public class GameController {
 
             }
 
-            if(currentPlayer.getCurrentCity() == "Jonto") {
-                currentPlayer.changeCurrentCity("Honto");
+            if(currentPlayer.getCurrentCity() == "Lavender Town") {
+                currentPlayer.changeCurrentCity("Celadon City");
             }
-            else if(currentPlayer.getCurrentCity() == "Honto") {
-                currentPlayer.changeCurrentCity("Ponto");
+            else if(currentPlayer.getCurrentCity() == "Celadon City") {
+                currentPlayer.changeCurrentCity("Cerulean City");
+            }
+            else if(currentPlayer.getCurrentCity() == "Cerulean City") {
+                currentPlayer.changeCurrentCity("Castelia City");
+            }
+            else if(currentPlayer.getCurrentCity() == "Castelia City") {
+                currentPlayer.changeCurrentCity("Cinnabar Island");
+            }
+            else if(currentPlayer.getCurrentCity() == "Cinnabar Island") {
+                currentPlayer.changeCurrentCity("PalletTown");
             }
             else{
-                currentPlayer.changeCurrentCity("Jonto");
+                currentPlayer.changeCurrentCity("Lavender Town");
             }
 
 

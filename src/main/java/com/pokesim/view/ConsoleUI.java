@@ -24,7 +24,7 @@ public class ConsoleUI implements UI {
 
         int chosenPokemon = scanner.nextInt();
 
-        return new Player(name, AllPokemons.starters.get(chosenPokemon).clone(), 0, new City("Jonto"));
+        return new Player(name, AllPokemons.starters.get(chosenPokemon).clone(), 0, new City("Lavender Town"));
     }
 
     @Override
