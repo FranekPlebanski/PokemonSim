@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
-    private String name;
-    private List<Pokemon> ownedPokemons = new ArrayList<>();
+    private final String name;
+    private final List<Pokemon> ownedPokemons = new ArrayList<>();
     private int moneyAmount = 0;
     private String currentCity;
 
@@ -34,14 +34,15 @@ public class Player {
         this.moneyAmount += 5;
     }
 
+    public void buyPokemonMoneyLose(int price){
+        this.moneyAmount -= price;
+    }
+
 
     public void addPokemon(Pokemon pokemon) {
         ownedPokemons.add(pokemon);
     }
 
-    public boolean hasPokemons() {
-        return !ownedPokemons.isEmpty();
-    }
 
     public List<Pokemon> getPokemons() {
         return ownedPokemons;

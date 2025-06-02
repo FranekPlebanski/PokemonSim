@@ -4,38 +4,42 @@ import com.pokesim.model.entities.*;
 import com.pokesim.model.game.BattleAction;
 import com.pokesim.model.game.CityAction;
 import com.pokesim.model.game.WildPokemonRandomChoice;
-import com.pokesim.model.store.PokemonStore;
 import com.pokesim.utils.RandomGenerator;
-import com.pokesim.view.ConsoleUI;
 import com.pokesim.view.UI;
+import com.pokesim.model.entities.AllPokemons;
 
 public class GameController {
 
     private final UI consoleUI;
-    private Player currentPlayer;
-    private AllPokemons allPokemons;
-
+    public AllPokemons allPokemons;
 
     public GameController(UI consoleUI) {
         this.consoleUI = consoleUI;
     }
 
     public void run() {
-        this.currentPlayer = consoleUI.startGame();
-        while(currentPlayer.getPokemons().size() <= 3 && !currentPlayer.getPokemons().isEmpty()) {
+        Player currentPlayer = consoleUI.startGame();
+        while(!currentPlayer.getPokemons().isEmpty() && currentPlayer.getPokemons().size() < 10) {
             CityAction action = consoleUI.cityMenu(currentPlayer.getCurrentCity());
             if (action == CityAction.BUY_POKEMON) {
 
                 consoleUI.displayMoneyAmount(currentPlayer);
                 StorePokemon pokemonToBuy = consoleUI.getStoreMenu();
+
+                if(pokemonToBuy == null){
+                    continue;
+                }
+
                 if(pokemonToBuy.getPrice() > currentPlayer.getMoneyAmount()){
                     consoleUI.notifyNoBuyPokemon(pokemonToBuy.getName());
                 }
-                else{
+                else if(pokemonToBuy.getPrice() < currentPlayer.getMoneyAmount()){
                     consoleUI.notifyBuyPokemon(pokemonToBuy.getName());
                     currentPlayer.getPokemons().add(pokemonToBuy);
+                    currentPlayer.buyPokemonMoneyLose(pokemonToBuy.getPrice());
 
                 }
+
 
 
 
@@ -43,8 +47,15 @@ public class GameController {
             }
             else if (action == CityAction.HEAL) {
 
-                currentPlayer.cityPokemonHeal();
-                consoleUI.notifyCityHeal();
+                if(currentPlayer.getMoneyAmount() >= 5){
+                    currentPlayer.cityPokemonHeal();
+                    consoleUI.notifyCityHeal();
+                    currentPlayer.buyPokemonMoneyLose(5);
+                }else{
+                    System.out.println("You don't have enough money to heal");
+                }
+
+
 
 
             }
@@ -88,35 +99,35 @@ public class GameController {
                 }
                 wildPokemons.setDefaultHp();
 
+                if(currentPlayer.getCurrentCity().equals("Lavender Town")) {
+                    currentPlayer.changeCurrentCity("Celadon City");
+                }
+                else if(currentPlayer.getCurrentCity().equals("Celadon City")) {
+                    currentPlayer.changeCurrentCity("Cerulean City");
+                }
+                else if(currentPlayer.getCurrentCity().equals("Cerulean City")) {
+                    currentPlayer.changeCurrentCity("Castelia City");
+                }
+                else if(currentPlayer.getCurrentCity().equals("Castelia City")) {
+                    currentPlayer.changeCurrentCity("Cinnabar Island");
+                }
+                else if(currentPlayer.getCurrentCity().equals("Cinnabar Island")) {
+                    currentPlayer.changeCurrentCity("PalletTown");
+                }
+                else{
+                    currentPlayer.changeCurrentCity("Lavender Town");
+                }
             }
 
-            if(currentPlayer.getCurrentCity() == "Lavender Town") {
-                currentPlayer.changeCurrentCity("Celadon City");
-            }
-            else if(currentPlayer.getCurrentCity() == "Celadon City") {
-                currentPlayer.changeCurrentCity("Cerulean City");
-            }
-            else if(currentPlayer.getCurrentCity() == "Cerulean City") {
-                currentPlayer.changeCurrentCity("Castelia City");
-            }
-            else if(currentPlayer.getCurrentCity() == "Castelia City") {
-                currentPlayer.changeCurrentCity("Cinnabar Island");
-            }
-            else if(currentPlayer.getCurrentCity() == "Cinnabar Island") {
-                currentPlayer.changeCurrentCity("PalletTown");
-            }
-            else{
-                currentPlayer.changeCurrentCity("Lavender Town");
-            }
 
 
 
         }
-        if (currentPlayer.getPokemons().size() == 4) {
-            consoleUI.notifyWin();
+        if (currentPlayer.getPokemons().isEmpty()) {
+            consoleUI.notifyLose();
         }
         else{
-            consoleUI.notifyLose();
+            consoleUI.notifyWin();
         }
     }
 }

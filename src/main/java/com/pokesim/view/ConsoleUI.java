@@ -146,12 +146,14 @@ public class ConsoleUI implements UI {
         System.out.println(allPokemons.getStorePokemons().size() + ". Exit");
         int pokemonToBuy = scanner.nextInt();
         if(pokemonToBuy < allPokemons.getStorePokemons().size()){
-            return allPokemons.getStorePokemons().get(pokemonToBuy);
+            StorePokemon pokemon = allPokemons.getStorePokemons().get(pokemonToBuy);
+            allPokemons.getStorePokemons().remove(pokemonToBuy);
+            return pokemon;
+
         }
         else{
             return null;
         }
-
     }
 
     @Override

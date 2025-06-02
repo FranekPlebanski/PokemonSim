@@ -1,10 +1,10 @@
 package com.pokesim.model.entities;
 
 public class Pokemon implements Cloneable {
-    private String name;
-    private String element;
+    private final String name;
+    private final String element;
     private int hp;
-    private int attack;
+    private final int attack;
 
     public Pokemon(String name, String element, int hp, int attack) {
         this.name = name;
@@ -34,11 +34,7 @@ public class Pokemon implements Cloneable {
         return hp;
     }
 
-    public void attack(int i, Pokemon pokemon, Pokemon enemyPokemon){
-        if(pokemon.getElement().equals("Fire") && enemyPokemon.getElement().equals("Ice")){
-            this.hp -= i*2;
-        }
-
+    public void attack(int i){
 
         this.hp -= i;
 
