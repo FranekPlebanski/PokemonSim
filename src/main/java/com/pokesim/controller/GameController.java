@@ -33,6 +33,8 @@ public class GameController {
                 }
                 else{
                     consoleUI.notifyBuyPokemon(pokemonToBuy.getName());
+                    currentPlayer.getPokemons().add(pokemonToBuy);
+
                 }
 
 

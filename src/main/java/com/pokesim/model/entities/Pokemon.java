@@ -34,8 +34,14 @@ public class Pokemon implements Cloneable {
         return hp;
     }
 
-    public void attack(int i){
+    public void attack(int i, Pokemon pokemon, Pokemon enemyPokemon){
+        if(pokemon.getElement().equals("Fire") && enemyPokemon.getElement().equals("Ice")){
+            this.hp -= i*2;
+        }
+
+
         this.hp -= i;
+
     }
 
     public void rest(){
@@ -54,9 +60,10 @@ public class Pokemon implements Cloneable {
         this.hp += 30;
     }
 
+
     @Override
     public String toString() {
-        return "Pokemon{" +
+        return "Pokemon {" +
                 "name='" + name + '\'' +
                 ", element='" + element + '\'' +
                 ", hp=" + hp +
