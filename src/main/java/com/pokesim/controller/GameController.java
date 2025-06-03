@@ -35,7 +35,13 @@ public class GameController {
                 }
                 else if(pokemonToBuy.getPrice() <= currentPlayer.getMoneyAmount()){
                     consoleUI.notifyBuyPokemon(pokemonToBuy.getName());
-                    currentPlayer.getPokemons().add(pokemonToBuy);
+                    Pokemon bought = new Pokemon(
+                            pokemonToBuy.getName(),
+                            pokemonToBuy.getElement(),
+                            pokemonToBuy.getHp(),
+                            pokemonToBuy.getAttack()
+                    );
+                    currentPlayer.getPokemons().add(bought);
                     currentPlayer.buyPokemonMoneyLose(pokemonToBuy.getPrice());
 
                 }
@@ -88,6 +94,7 @@ public class GameController {
                             chosenOne.attack(attackValue, chosenOne, wildPokemons);
                             consoleUI.notifyAttackOpponent(attackValue);
                         }
+                    }
 
                         if (chosenOne.getHp() <= 0) {
                             currentPlayer.removePokemon(chosenOne);
@@ -97,7 +104,7 @@ public class GameController {
                             consoleUI.notifyCatch(wildPokemons.getName());
                             currentPlayer.winBattleMoney();
                         }
-                    }
+
                 }
                 wildPokemons.setDefaultHp();
 
