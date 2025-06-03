@@ -33,7 +33,7 @@ public class GameController {
                 if(pokemonToBuy.getPrice() > currentPlayer.getMoneyAmount()){
                     consoleUI.notifyNoBuyPokemon(pokemonToBuy.getName());
                 }
-                else if(pokemonToBuy.getPrice() < currentPlayer.getMoneyAmount()){
+                else if(pokemonToBuy.getPrice() <= currentPlayer.getMoneyAmount()){
                     consoleUI.notifyBuyPokemon(pokemonToBuy.getName());
                     currentPlayer.getPokemons().add(pokemonToBuy);
                     currentPlayer.buyPokemonMoneyLose(pokemonToBuy.getPrice());
@@ -67,7 +67,7 @@ public class GameController {
                     switch (choice) {
                         case FIGHT:
                             int attackValue = new RandomGenerator().getRandomInt(chosenOne.getAttack() - 3, chosenOne.getAttack() + 3);
-                            wildPokemons.attack(attackValue);
+                            wildPokemons.attack(attackValue, wildPokemons, chosenOne);
                             consoleUI.notifyAttackSelf(attackValue);
                             break;
                         case HEAL:
@@ -75,26 +75,28 @@ public class GameController {
                             consoleUI.notifyRestSelf();
                             break;
                     }
+                    if (wildPokemons.getHp() > 0) {
 
-                    consoleUI.opponentTurn();
-                    int random = new RandomGenerator().getRandomInt(0, 100);
-                    if(random < 30) {
-                        wildPokemons.rest();
-                        consoleUI.notifyRestOpponent();
-                    }
-                    else{
-                        int attackValue = new RandomGenerator().getRandomInt(wildPokemons.getAttack() - 3, wildPokemons.getAttack() + 3);
-                        chosenOne.attack(attackValue);
-                        consoleUI.notifyAttackOpponent(attackValue);
-                    }
 
-                    if(chosenOne.getHp() <= 0) {
-                        currentPlayer.removePokemon(chosenOne);
-                        consoleUI.notifyLosePokemon(chosenOne);
-                    } else if (wildPokemons.getHp() <= 0) {
-                        currentPlayer.addPokemon(wildPokemons);
-                        consoleUI.notifyCatch(wildPokemons.getName());
-                        currentPlayer.winBattleMoney();
+                        consoleUI.opponentTurn();
+                        int random = new RandomGenerator().getRandomInt(0, 100);
+                        if (random < 30) {
+                            wildPokemons.rest();
+                            consoleUI.notifyRestOpponent();
+                        } else {
+                            int attackValue = new RandomGenerator().getRandomInt(wildPokemons.getAttack() - 3, wildPokemons.getAttack() + 3);
+                            chosenOne.attack(attackValue, chosenOne, wildPokemons);
+                            consoleUI.notifyAttackOpponent(attackValue);
+                        }
+
+                        if (chosenOne.getHp() <= 0) {
+                            currentPlayer.removePokemon(chosenOne);
+                            consoleUI.notifyLosePokemon(chosenOne);
+                        } else if (wildPokemons.getHp() <= 0) {
+                            currentPlayer.addPokemon(wildPokemons);
+                            consoleUI.notifyCatch(wildPokemons.getName());
+                            currentPlayer.winBattleMoney();
+                        }
                     }
                 }
                 wildPokemons.setDefaultHp();

@@ -54,7 +54,7 @@ public class Player {
 
     public void cityPokemonHeal(){
         for(int i = 0; i <= ownedPokemons.size() - 1; i++){
-            ownedPokemons.get(i).cityPokemonHeal();
+            ownedPokemons.get(i).cityPokemonHeal(30);
         }
     }
 

@@ -6,7 +6,7 @@ public class WildPokemons extends Pokemon {
     }
 
     @Override
-    public void attack(int i) {
-        super.attack(i*2);
+    public void cityPokemonHeal(int i) {
+        super.cityPokemonHeal(i + 10);
     }
 }

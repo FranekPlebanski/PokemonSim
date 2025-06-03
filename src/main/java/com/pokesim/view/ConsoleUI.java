@@ -13,7 +13,7 @@ public class ConsoleUI implements UI {
 
     @Override
     public Player startGame() {
-        System.out.println("Welcome to the pokesim game!");
+        System.out.println("Welcome to the pokemonSIM game!");
         System.out.println("Choose your name:");
         String name = scanner.nextLine();
         System.out.println("Choose starting pokemon:");
