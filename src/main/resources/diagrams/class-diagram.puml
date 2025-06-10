@@ -5,19 +5,45 @@ package model.entities {
     - element: String
     - hp: int
     - attack: int
+    + getName(): String
+    + getElement(): String
+    + getHp(): int
+    + attack(int i, Pokemon pokemon, Pokemon enemyPokemon): void
+    + rest(): void
+    + getAttack(): int
+    + setDefaultHp(): void
+    + cityPokemonHeal(int i): void
   }
-  class WildPokemon extends Pokemon {
+  class WildPokemons extends Pokemon {
+    + cityPokemonHeal(): void
   }
   class Player {
     - name: String
     - pokemons: List<Pokemon>
-    + addPokemon(p: Pokemon): void
-    + hasPokemons(): boolean
+    - moneyAmount: int
+    - currentCity: String
+    + getMoneyAmount(): int
+    + getCurrentCity(): String
+    + changeCurrentCity(String newCity): void
+    + winBattleMoney(): void
+    + buyPokemonMoneyLose(int price): void
+    + addPokemon(Pokemon pokemon): void
+    + getPokemons(): List<Pokemon>
+    + removePokemon(Pokemon pokemon): void
+    + cityPokemonHeal(): void
+    + getName(): String
   }
   class AllPokemons{
-    + getPokemon(): void
-    + getStarters(): List<Pokemon>
-    + getShopPokemons(): List<Pokemon>
+    + starters: List<Pokemon>
+    - wildPokemons: List<WildPokemons>
+    + storePokemons: List<StorePokemon>
+    + getWildPokemons(): List<WildPokemons>
+    + getStorePokemons(): List<StorePokemon>
+    + getStarter(int index): Pokemon
+  }
+  class StorePokemon extends Pokemon{
+    - price
+    + getPrice(): int
 
   }
 }
@@ -25,43 +51,51 @@ package model.entities {
 package model.world {
   class City {
     - name: String
-    + getMenu(): List<String>
-  }
-  class Road {
-    - from: City
-    - to: City
+    + getName(): String
   }
 }
 
 package model.game {
-  class Game {
+  class WildPokemonRandomChoice {
     - player: Player
     - currentCity: City
     + start(): void
     + isGameOver(): boolean
   }
-  class BattleSystem {
-    + startBattle(player: Player, wildPokemon: WildPokemon): boolean
+  enum BattleAction{
+  + HEAL
+  + FIGHT
   }
-  class StarterSelector {
-    + selectStarter(choice: int): Pokemon
+
+  enum CityAction{
+  + HEAL
+  + FIGHT
+  + BUY_POKEMON
   }
-  class WildPokemonGetter {
-    + getRandomWildPokemon(): WildPokemon
-  }
+
 }
 
-package model.store {
-  class PokemonStore {
-    + buyPokemon(): Pokemon
-  }
-}
 
 package view {
   class ConsoleUI {
-    + displayCityOptions(city: City): void
-    + getStarterChoice(): int
-    + getName(): String
+    + startGame(): Player
+    + cityMenu(String city): CityAction
+    + battleInfo(WildPokemons wildPokemons, Player currentPlayer): Pokemon
+    + battleInterface(WildPokemons  wildPokemons, Pokemon currentPokemon): BattleAction
+    + notifyAttackSelf(int attackValue): void
+    + notifyRestSelf(): void
+    + notifyAttackOpponent(int attackValue): void
+    + notifyCatch(String pokemonName): void
+    + notifyLosePokemon(Pokemon pokemon): void
+    + notifyRestOpponent(): void
+    + opponentTurn(): void
+    + notifyCityHeal(): void
+    + getStoreMenu(): StorePokemon
+    + notifyBuyPokemon(String pokemonName): void
+    + notifyNoBuyPokemon(String pokemonName): void
+    + displayMoneyAmount(Player currentPlayer): void
+    + notifyWin(): void
+    + notifyLose(): void
   }
 }
 
@@ -77,30 +111,26 @@ package utils {
   }
 }
 
-Game --> Player
-Game --> BattleSystem
-Game --> WildPokemonGetter
-Game --> ConsoleUI
+package app{
+class Main{
+}
+}
 
-Road --> City : from
-Road --> City : to
+Main --> GameController
+
+WildPokemonRandomChoice --> RandomGenerator
+
+ConsoleUI --> Player
+ConsoleUI --> CityAction
+ConsoleUI --> BattleAction
+GameController --> AllPokemons
 
 Player --> Pokemon
 
-BattleSystem ..> Player
-BattleSystem ..> WildPokemon
-BattleSystem --> RandomGenerator
-
-WildPokemonGetter ..> WildPokemon
-WildPokemonGetter ..> RandomGenerator
-
 ConsoleUI ..> City
 
-StarterSelector --> AllPokemons
+GameController --> ConsoleUI
 
-PokemonStore --> AllPokemons
-
-GameController --> Game
 
 AllPokemons --> Pokemon
 @enduml

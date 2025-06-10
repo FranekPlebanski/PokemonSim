@@ -1,0 +1,7 @@
+com.pokesim.app
+com.pokesim.controller
+com.pokesim.model.entities
+com.pokesim.model.game
+com.pokesim.model.world
+com.pokesim.utils
+com.pokesim.view
