@@ -1,10 +1,25 @@
 package com.pokesim.model.entities;
 
+/**
+ * Klasa reprezentuje Pokemona
+ * Implementuje ona również system przyznawania obrażeń w walce
+ * Implementuje interfejs Cloneable aby tworzyć kopie Pokemonów
+ */
+
 public class Pokemon implements Cloneable {
     private final String name;
     private final String element;
     private int hp;
     private final int attack;
+
+    /**
+     * Konstruktor tworzący nowego Pokemona
+     *
+     * @param name nazwa Pokemona
+     * @param element żywioł Pokemona
+     * @param hp początkowa wartość zdrowia
+     * @param attack wartość ataku
+     */
 
     public Pokemon(String name, String element, int hp, int attack) {
         this.name = name;
@@ -12,6 +27,12 @@ public class Pokemon implements Cloneable {
         this.hp = hp;
         this.attack = attack;
     }
+
+    /**
+     * Tworzy kopię Pokemona
+     *
+     * @return klon Pokemona
+     */
 
     public Pokemon clone() {
         try {
@@ -22,17 +43,41 @@ public class Pokemon implements Cloneable {
         }
     }
 
+    /**
+     * Metoda zwraca nazwę Pokemona
+     * @return nazwa Pokemona
+     */
+
     public String getName() {
         return name;
     }
+
+    /**
+     * Metoda zwraca żywioł Pokemona
+     * @return żywioł Pokemona
+     */
 
     public String getElement() {
         return element;
     }
 
+    /**
+     * Metoda zwraca aktualną wartość punktów zdrowia
+     * @return wartość punktów zdrowia
+     */
+
     public int getHp() {
         return hp;
     }
+
+    /**
+     * Metoda ataku między pokemonami (1 tura)
+     * Uwzględnione są mocne i słabe strony Pokemonów
+     *
+     * @param i wartość ataku Pokemona
+     * @param pokemon Pokemon broniący
+     * @param enemyPokemon Pokemon atakujący
+     */
 
     public void attack(int i, Pokemon pokemon, Pokemon enemyPokemon){
         if(enemyPokemon.getElement().equals("Normal")){
@@ -250,22 +295,44 @@ public class Pokemon implements Cloneable {
         }
     }
 
+    /**
+     * Metoda regeneruje wartość zdrowia Pokemona o 10 punktów
+     */
+
     public void rest(){
         this.hp += 10;
     }
+
+    /**
+     * Metoda zwraca wartość ataku Pokemona
+     * @return wartość ataku
+     */
 
     public int getAttack() {
         return attack;
     }
 
+    /**
+     * Metoda regeneruje Pokemona po przegranej walce
+     */
+
     public void setDefaultHp(){
         this.hp += 50;
     }
+
+    /**
+     * Metoda leczy Pokemona podczas leczenia w mieście
+     * @param i wartość punktów do przywrócenia
+     */
 
     public void cityPokemonHeal(int i){
         this.hp += i;
     }
 
+    /**
+     * Metoda zwraca tekstową reprezentację Pokemona
+     * @return sformatowany string z informacjami o Pokemonie
+     */
 
     @Override
     public String toString() {

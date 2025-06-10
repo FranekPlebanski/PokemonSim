@@ -3,12 +3,23 @@ package com.pokesim.model.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Klasa przetrzymująca wszystkie dostępne pokemony w symulacji
+ */
+
 public class AllPokemons {
+    /**
+     * Lista Pokemonów (obiektów) startowych
+     */
     public static final List<Pokemon> starters = List.of(
             new Pokemon("Bulbasaur", "Earth", 100, 5),
             new Pokemon("Charmander", "Fire", 90, 10),
             new Pokemon("Squirtle", "Water", 95, 6)
     );
+
+    /**
+     * Lista pokemonów(obiektów) do znalezienia na drodze, z którymi można walczyć
+     */
 
     private final List<WildPokemons> wildPokemons = List.of(
             new WildPokemons("Rattata", "Normal", 20, 40),
@@ -107,29 +118,39 @@ public class AllPokemons {
 
             );
 
+    /**
+     * Lista Pokemonów (obiektów) dostępnych do kupienia w sklepie
+     */
+
     public List<StorePokemon> storePokemons = new ArrayList<>(List.of(
             new StorePokemon("Snorlax", "normal", 460, 100, 20),
             new StorePokemon("Diglet", "Earth", 20, 10, 5)
     ));
 
+    /**
+     * Metoda do zwracania całej listy dzikich Pokemonów
+     * @return lista wildPokemons
+     */
 
     public List<WildPokemons> getWildPokemons() {
         return wildPokemons;
     }
 
+    /**
+     * Metoda do zwracania całej listy sklepowych Pokemonów
+     * @return lista storePokemons
+     */
     public List<StorePokemon> getStorePokemons() {
         return storePokemons;
     }
 
-    public StorePokemon getStorePokemon(int index) {
-        return storePokemons.get(index);
-    }
-
+    /**
+     * Metoda do zwrócenia wybranego pokemona z listy starters
+     * @param index numer wybranego pokemona na liście
+     * @return
+     */
     public Pokemon getStarter(int index) {
         return starters.get(index);
     }
 
-    public WildPokemons getWildPokemon(int index) {
-        return wildPokemons.get(index);
-    }
 }

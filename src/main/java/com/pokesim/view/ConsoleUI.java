@@ -7,9 +7,18 @@ import com.pokesim.model.world.City;
 
 import java.util.Scanner;
 
+/**
+ * Klasa odpowiedzialna za interfejs użytkownika w konsoli
+ */
+
 public class ConsoleUI implements UI {
     private final Scanner scanner = new Scanner(System.in);
     AllPokemons allPokemons = new AllPokemons();
+
+    /**
+     * Metoda rozpoczyna grę, prosi użytkownika o podanie nazwy gracza i wybór Pokemona startowego
+     * @return nowy obiekt Player z wybraną nazwą i Pokemonem
+     */
 
     @Override
     public Player startGame() {
@@ -27,6 +36,11 @@ public class ConsoleUI implements UI {
         return new Player(name, AllPokemons.starters.get(chosenPokemon).clone(), 0, new City("Lavender Town"));
     }
 
+    /**
+     * Metoda wyświetla menu miasta i prosi o wybór akcji gracza
+     * @param city nazwa aktualnego miasta
+     * @return wybrana akcja w mieście (FIGHT, HEAL, BUY_POKEMON)
+     */
     @Override
     public CityAction cityMenu(String city){
         while(true) {
@@ -50,8 +64,13 @@ public class ConsoleUI implements UI {
         }
     }
 
-
-
+    /**
+     * Metoda wyświetla informacje o napotkanym dzikim pokemonie i prosi o wybór Pokemona do walki
+     *
+     * @param wildPokemons spotkany dziki Pokemon
+     * @param currentPlayer aktualny gracz
+     * @return wybrany Pokemon przez gracza do walki
+     */
     @Override
     public Pokemon battleInfo(WildPokemons wildPokemons, Player currentPlayer) {
 
@@ -64,6 +83,14 @@ public class ConsoleUI implements UI {
         return currentPlayer.getPokemons().get(choice);
     }
 
+
+    /**
+     * Metoda wyświetla interfejs walki i prosi o wybór akcji do wykonania
+     *
+     * @param wildPokemons dziki Pokemon, z którym walczymy
+     * @param currentPokemon Pokemon, który został wcześniej wybrany
+     * @return wybrana akacja (FIGHT, HEAL(
+     */
     @Override
     public BattleAction battleInterface(WildPokemons wildPokemons, Pokemon currentPokemon) {
         while(true) {
@@ -96,48 +123,79 @@ public class ConsoleUI implements UI {
 
     }
 
+    /**
+     * Metoda powiadamia o wykonanym ataku na przeciwnika
+     * @param attackValue wartość zadanych obrażeń
+     */
     @Override
     public void notifyAttackSelf(int attackValue){
         System.out.println("You've attacked opponent for " + attackValue + " damage!");
     }
 
+    /**
+     * Metoda powiadamia gracza o wyleczeniu się podczas walki
+     */
     @Override
     public void notifyRestSelf(){
         System.out.println("You've rested and restored 10 hp points");
     }
 
+    /**
+     * Metoda powiadamia gracza o wykonanym ataku przez przeciwnika
+     * @param attackValue wartość przyjętych obrażeń
+     */
     @Override
     public void notifyAttackOpponent(int attackValue){
         System.out.println("Opponent attacked you for " + attackValue + " damage!");
 
     }
 
+    /**
+     * Metoda powiadamia o schwytaniu pokemona
+     * @param pokemonName nazwa schwytanego pokemona
+     */
     @Override
     public void notifyCatch(String pokemonName){
         System.out.println("You've caught " + pokemonName);
     }
 
+    /**
+     * Metoda powiadamia o utracie Pokemona
+     * @param pokemon utracony pokemon
+     */
     @Override
     public void notifyLosePokemon(Pokemon pokemon){
         System.out.println("You've lost pokemon " + pokemon.getName());
     }
 
-
+    /**
+     * Metoda powiadamia gracza o uleczeniu przez przeciwnika
+     */
     @Override
     public void notifyRestOpponent(){
         System.out.println("Opponent has rested and restored 10 hp points");
     }
 
+    /**
+     * Metoda powiadamia gracza o tym, że jest aktualnie runda przeciwnika
+     */
     @Override
     public void opponentTurn(){
         System.out.println("Opponent's turn!");
     }
 
+    /**
+     * Metoda powiadamia o wyleczeniu Pokemonów gracza w mieście
+     */
     @Override
     public void notifyCityHeal(){
         System.out.println("You've healed all your pokemons!");
     }
 
+    /**
+     * Metoda wyświetla i prosi użytkownika o wybór Pokemona do kupienia
+     * @return Pokemon do kupienia lub null w przypadku wybraniu wyjścia
+     */
     @Override
     public StorePokemon getStoreMenu(){
         for (int i = 0; i < allPokemons.getStorePokemons().size(); i++) {
@@ -156,26 +214,44 @@ public class ConsoleUI implements UI {
         }
     }
 
+    /**
+     * Metoda powiadamia o kupieniu pokemona
+     * @param pokemonName nazwa kupionego Pokemona
+     */
     @Override
     public void notifyBuyPokemon(String pokemonName){
         System.out.println("You've bought " + pokemonName);
     }
 
+    /**
+     * Metoda powiadamia o braku funduszy na kupno wybranego Pokemona
+     * @param pokemonName nazwa wybranego Pokemona do kupienia
+     */
     @Override
     public void notifyNoBuyPokemon(String pokemonName){
         System.out.println("You can't afford " + pokemonName);
     }
 
+    /**
+     * Metoda wyświetla aktualną ilość monetek gracza
+     * @param currentPlayer obecny gracz
+     */
     @Override
     public void displayMoneyAmount(Player currentPlayer){
         System.out.println("Your balance: " + currentPlayer.getMoneyAmount());
     }
 
+    /**
+     * Metoda informuje o wygraniu gry przez gracza
+     */
     @Override
     public void notifyWin(){
         System.out.println("You win!");
     }
 
+    /**
+     * Metoda informuje o przegraniu gry przez gracza
+     */
     @Override
     public void notifyLose(){
         System.out.println("You lose!");

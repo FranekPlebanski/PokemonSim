@@ -8,18 +8,32 @@ import com.pokesim.utils.RandomGenerator;
 import com.pokesim.view.UI;
 import com.pokesim.model.entities.AllPokemons;
 
+/**
+ * Główna klasa kontrolująca przebieg rozgrywki
+ */
 public class GameController {
 
+    /**
+     * Interfejs używany do komunikacji
+     */
     private final UI consoleUI;
-    public AllPokemons allPokemons;
 
+    /**
+     * Konstruktor
+     * @param consoleUI interfejs użytkownika
+     */
     public GameController(UI consoleUI) {
         this.consoleUI = consoleUI;
     }
 
+    /**
+     * Główna pętla gry. Zarządza wyborami gracza w mieście, walką z dzikimi Pokemonami, leczeniem i przemieszczaniem się
+     * Pętla kończy się w momencie utraty wszystkich Pokemonów lub zdobyciu maksymalnej ilości
+     */
     public void run() {
         Player currentPlayer = consoleUI.startGame();
         while(!currentPlayer.getPokemons().isEmpty() && currentPlayer.getPokemons().size() < 10) {
+            // Wybory w mieście i walka
             CityAction action = consoleUI.cityMenu(currentPlayer.getCurrentCity());
             if (action == CityAction.BUY_POKEMON) {
 
@@ -108,6 +122,8 @@ public class GameController {
                 }
                 wildPokemons.setDefaultHp();
 
+
+                // Zmiana miasta
                 if(currentPlayer.getCurrentCity().equals("Lavender Town")) {
                     currentPlayer.changeCurrentCity("Celadon City");
                 }
@@ -132,6 +148,7 @@ public class GameController {
 
 
         }
+        // Koniec gry
         if (currentPlayer.getPokemons().isEmpty()) {
             consoleUI.notifyLose();
         }
