@@ -1,3 +1,6 @@
+# Autor
+Franciszek Plebański
+
 # Projekt symulacja trenera Pokemon
 
 # Opis
